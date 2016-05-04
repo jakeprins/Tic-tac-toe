@@ -2,6 +2,8 @@ import React from 'react';
 import GameModel from './models/GameModel';
 import NewPlayerComponent from './components/NewPlayerComponent';
 import CellComponent from './components/CellComponent';
+import GameComponent from './components/GameComponent';
+import Utils from './lib/Utils';
 
 const styles = {
   row: {
@@ -14,19 +16,28 @@ class App extends React.Component {
   constructor() {
     super();
     this.games = new GameModel();
+    this.utils = new Utils();
+
+    let playerStorage = this.utils.store("tictactoe.player");
+    if (playerStorage.length === 0) {
+      playerStorage = null;
+    }
 
     this.state = {
       cells: [
-        null, "cross", null,
-        null, "circle", null,
-        "circle", null, null
-      ]
+        null, null, null,
+        null, null, null,
+        null, null, null
+      ],
+      games: [],
+      currentGame: null,
+      currentPlayer: playerStorage,
     };
   }
 
   getPlayerSymbol() {
     //TODO: determine which player we are (one or two?)
-    return "cross"; // or "circle"
+    return "circle"; // or "circle"
   }
 
   stealCell(index) {
@@ -47,6 +58,21 @@ class App extends React.Component {
     };
   }
 
+  setPlayer(player) {
+    this.setState({
+      currentPlayer: player
+    });
+    this.utils.store("tictactoe.player", player);
+    
+  }
+
+  createGame() {
+    this.games.addResource({
+      playerOne: this.state.currentPlayer
+    });
+  }
+
+
   render() {
     return (
       <div style={this.getBoardStyles()}>
@@ -65,7 +91,14 @@ class App extends React.Component {
           <CellComponent content={this.state.cells[7]} index={7} onClick={this.stealCell.bind(this)}/>
           <CellComponent content={this.state.cells[8]} index={8} onClick={this.stealCell.bind(this)}/>
         </div>
+
+        { this.state.currentPlayer !== null &&
+          <p>Hi, {this.state.currentPlayer}</p> }
+
+        { this.state.currentPlayer === null &&
+          <NewPlayerComponent onCreate={this.setPlayer.bind(this)}/> }
       </div>
+
     );
   }
 }
