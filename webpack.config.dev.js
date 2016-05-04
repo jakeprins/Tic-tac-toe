@@ -22,6 +22,9 @@ module.exports = {
       test: /\.jsx?/,
       loaders: ['babel'],
       include: path.join(__dirname, 'src')
+    },{
+      test: /\.(jpe?g|png|gif|svg)$/i,
+      loader: 'file-loader'
     }]
   }
 };

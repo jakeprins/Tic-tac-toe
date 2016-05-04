@@ -1,48 +1,51 @@
-import React from 'react'
+import React from 'react';
+
+const cross = require('../images/cross.png');
+const circle = require('../images/circle.png');
 
 class CellComponent extends React.Component {
   constructor(){
-    super()
-    this.state = {cell: ""};
+    super();
   }
 
-    cellStateX() {
-      this.setState({cell: "X"});
-        return (
-          <button>{this.state.cell}</button>
-      );
+  getCellStyles() {
+    return {
+      width: "30%",
+      height: "100%",
+      border: "1px solid #eee",
+      borderRadius: "3px",
+      dropShadow: "1px 1px 3px rgba(0,0,0,0.3)",
+      display: "inline-block",
+      backgroundPosition: "50% 50%",
+      backgroundRepeat: "no-repeat",
+      backgroundSize: "contain",
+      backgroundImage: this.getImage()
+    };
+  }
+
+  getImage() {
+    if (this.props.content === "cross") {
+      return `url(${cross})`;
     }
 
-    cellStateO() {
-      this.setState({cell: "O"});
-        return (
-          <button>{this.state.cell}</button>
-      );
+    if (this.props.content === "circle") {
+      return `url(${circle})`;
     }
+  }
 
-    render() {
+  clickCell() {
+    if (this.props.content === null) {
+      this.props.onClick(this.props.index);
+    }
+  }
+
+  render() {
+    let cellStyle = this.getCellStyles();
 
     return (
-      <div>
-        <div>
-          <button onClick={this.clickState}>{this.clickState.cell}</button>
-          <button></button>
-          <button></button>
-        </div>
-        <div>
-          <button>X</button>
-          <button>X</button>
-          <button>X</button>
-        </div>
-        <div>
-          <button></button>
-          <button></button>
-          <button></button>
-        </div>
-      </div>
+      <div style={cellStyle} onClick={this.clickCell.bind(this)}></div>
     );
-
-
+  }
 }
 
 export default CellComponent;
