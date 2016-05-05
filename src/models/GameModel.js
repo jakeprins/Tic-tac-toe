@@ -3,10 +3,13 @@ import BaseModel from './BaseModel';
 class GameModel extends BaseModel {
   defaults() {
     return {
-      playerOne: "cross",
-      playerTwo: "circle",
-      playerOneMove: null,
-      playerTwoMove: null,
+      playerOne: null,
+      playerTwo: null,
+      cells: [
+        null, null, null,
+        null, null, null,
+        null, null, null
+      ],
       winner: null
     };
   }

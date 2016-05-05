@@ -53,8 +53,13 @@
   "dependencies": {
     "feathers-client": "^1.2.0",
     "file-loader": "^0.8.5",
+    "material-ui": "^0.14.4",
     "mongodb": "^2.1.18",
     "react": "^0.14.3",
-    "react-dom": "^0.14.3"
+    "react-dom": "^0.14.3",
+    "react-tap-event-plugin": "^0.2.2",
+    "socket.io": "^1.4.5",
+    "socket.io-client": "^1.4.5",
+    "socketio": "^1.0.0"
   }
 }
